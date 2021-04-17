@@ -1,0 +1,94 @@
+<div class="row">
+<div class="col-md-6 border border-top-0 border-bottom-0">
+<form [formGroup]="todoList" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="title"><b>Task Title :</b></label>
+    <input type="text" name="title" id="title" class="form-control" #newList formControlName="title">
+  </div>
+  <div class="form-group">
+  <label for="description"><b>Short Description :</b></label>
+  <textarea name="description" id="description" class="form-control" formControlName="description"></textarea>
+  </div>
+  <div class="form-group">
+  <label for="date"><b>Date Of expire :</b></label>
+  <input type="date" id="dt" name="date" class="form-control" min="{{currentDate |date:'yyyy-MM-dd'}}" formControlName="date">
+  </div>
+  <div class="form-group" hidden>
+  <label for="status">Status</label>
+  <input type="status" id="status" name="status" formControlName="status">
+  </div>
+  <div class="form-group">
+  <button class="btn btn-danger">Add Task</button>
+  </div>
+
+</form>
+</div>
+<div class="col-md-6">
+  <p style="text-align: center;"><b>List of All Taks</b></p>
+<div class="container rounded border border-dark mb-5 pb-2" *ngFor="let list of lists">
+  <h4>{{list.title}}</h4>
+  <p>{{list.description}}</p>
+  <div class="row">
+  <div class="col-md-4">
+    <h6>Date of Expiry: {{list.date}}</h6>
+  </div>
+  <div class="col-md-4" [hidden]="changeStatus(list)">
+    <h6 *ngIf="list.status=='yet to start'" class="text-primary">Status: {{list.status}}</h6>
+    <h6 *ngIf="list.status=='in progress'" class="text-warning">Status: {{list.status}}</h6>
+    <h6 *ngIf="list.status=='Completed'" class="text-success">Status: {{list.status}}</h6>
+    <h6 *ngIf="list.status=='Expired'" class="text-danger">Status: {{list.status}}</h6>
+  </div>
+  <div class="col-md-4">
+   <button class="btn btn-info btn-sm" [disabled]="list.status=='Expired' || list.status=='Completed'" *ngIf="list.status=='yet to start'" (click)="updateItem(list)">change status</button>
+   <button class="btn btn-warning btn-sm" [disabled]="list.status=='Expired' || list.status=='Completed'" *ngIf="list.status=='in progress'" (click)="updateItem(list)">change status</button>
+   <button class="btn btn-success btn-sm" [disabled]="list.status=='Expired' || list.status=='Completed'" *ngIf="list.status=='Completed'" (click)="updateItem(list)">change status</button>
+   <button class="btn btn-danger btn-sm" [hidden]="list.status=='Expired' || list.status=='Completed'" *ngIf="list.status=='Expired'" (click)="updateItem(list)">change status</button>
+  </div>
+</div>
+  <!-- <div class="row" *ngIf="show">
+    <button class="btn btn-primary" [disabled]="list.status=='Expired' || list.status=='Completed'" (click)="updateItem(list); actionMethod($event)">in progress</button>
+      <button class="btn btn-success" [disabled]="list.status=='Expired'" (click)="updateStatus(list); actionMethod($event)">Completed</button>
+  </div> -->
+</div>
+<!-- <table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Date</th>
+    <th>Status</th>
+  </tr>
+</thead>
+<tbody *ngFor="let list of lists">
+  <tr>
+    <th>{{list.title}}</th>
+    <td>{{list.description}}</td>
+    <td>{{list.date}}</td>
+    <td [hidden]="changeStatus(list)">{{list.status}}</td>
+    <td><button class="btn btn-info btn-sm" (click)="toggle()">change status</button></td>
+  </tr>
+  <tr>
+    <div *ngIf="show">
+      <button class="btn btn-primary" [disabled]="list.status=='Expired' || list.status=='Completed'" (click)="updateItem(list); actionMethod($event)">in progress</button>
+      <button class="btn btn-success" [disabled]="list.status=='Expired'" (click)="updateStatus(list); actionMethod($event)">Completed</button>
+    </div>
+    </tr>
+</tbody>
+</table> -->
+</div>
+</div>
+<!-- <p>{{ currentDate }}</p> -->
+<!-- <script>
+  function myFunction()
+  {
+    var x = document.getElementById("showDIV");
+    if (x.style.display === "none")
+    {
+      x.style.display = "block";
+    }
+    else
+    {
+      x.style.display = "none";
+    }
+  }
+</script> -->

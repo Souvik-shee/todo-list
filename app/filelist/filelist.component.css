@@ -1,0 +1,13 @@
+/* table, th, td {
+  border: 1px solid black;
+}
+th,td{
+  padding: 5px;
+}
+th{
+  background-color: lightgray;
+} */
+.row{
+  padding-top: 50px;
+}
+
